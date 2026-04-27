@@ -1,4 +1,4 @@
-# Rhymer — AI-Powered Music Recommender System
+# Rhymer: AI-Powered Music Recommender System
 
 ## Original Project: "Rhymer" (Modules 1-3)
 
@@ -10,9 +10,9 @@ This project extends Rhymer into an **agentic AI system**: an LLM-driven orchest
 
 ## What It Does & Why It Matters
 
-Rhymer lets you describe your music taste in plain English — *"I want chill lofi beats for studying"* or *"upbeat pop for my morning workout"* — and receive ranked recommendations with explanations of why each song was chosen, plus a confidence score indicating how well the results match intent.
+Rhymer lets you describe your music taste in plain English: *"I want chill lofi beats for studying"* or *"upbeat pop for my morning workout"*. It returns ranked recommendations with explanations of why each song was chosen, plus a confidence score indicating how well the results match intent.
 
-Traditional recommenders force users into rigid forms (sliders, dropdowns, numerical inputs). By combining an LLM's natural-language understanding with a deterministic scoring engine, Rhymer makes personalization accessible without sacrificing reproducibility or explainability — two qualities employers and users both care about.
+Traditional recommenders force users into rigid forms (sliders, dropdowns, numerical inputs). By combining an LLM's natural-language understanding with a deterministic scoring engine, Rhymer makes personalization accessible without sacrificing reproducibility or explainability. These are two qualities employers and users both care about.
 
 ---
 
@@ -30,9 +30,9 @@ User Query (natural language)
 │              │     4. CRITIQUE: self-evaluate + confidence score
 └──────┬───────┘
        │ calls
-       ├────────► Recommender (recommender.py) — weighted scoring engine
-       ├────────► RAG Retriever (rag_retriever.py) — CSV + taxonomy context
-       └────────► Evaluator (evaluator.py) — diversity, spread, guardrails
+       ├────────► Recommender (recommender.py): weighted scoring engine
+       ├────────► RAG Retriever (rag_retriever.py): CSV + taxonomy context
+       └────────► Evaluator (evaluator.py): diversity, spread, guardrails
 
 Output: Ranked recommendations with explanations, confidence scores,
         and observable reasoning trace logged to file.
@@ -47,7 +47,7 @@ Output: Ranked recommendations with explanations, confidence scores,
 ### Prerequisites
 
 - Python 3.12+
-- [LM Studio](https://lmstudio.ai/) with a model loaded and local server running on `http://localhost:1234` (optional — classic mode requires no LLM)
+- [LM Studio](https://lmstudio.ai/) with a model loaded and local server running on `http://localhost:1234` (optional; classic mode requires no LLM)
 
 ### Install & Run
 
@@ -61,10 +61,10 @@ python -m venv .venv && source .venv/bin/activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4a. Classic mode — no LLM needed, runs immediately
+# 4a. Classic mode (no LLM needed, runs immediately)
 python -m src.main --classic
 
-# 4b. Agent mode — requires LM Studio running on localhost:1234
+# 4b. Agent mode (requires LM Studio running on localhost:1234)
 python -m src.main --agent "I want chill lofi beats for studying"
 
 # Compare few-shot vs baseline prompting
@@ -86,15 +86,15 @@ PYTHONPATH=src pytest tests/ -v
 **Query:** `"I want chill lofi beats for studying"`
 
 ```
-[STEP 1/4] Planning — extracting taste profile from query...
+[STEP 1/4] Planning: extracting taste profile from query...
 [STEP 2/4] Retrieving song context via RAG...
 [STEP 3/4] Scoring songs with recommender engine...
 [STEP 4/4] Critiquing recommendations with LLM...
 
- 1. Library Rain — Paper Lanterns [lofi, chill]  score=26.20
+ 1. Library Rain by Paper Lanterns [lofi, chill]  score=26.20
     Why: genre match (lofi), mood match (chill), perfect energy, ideal acousticness, matching tempo
 -----------------------------------------------------------------
- 2. Midnight Coding — LoRoom [lofi, chill]  score=25.40
+ 2. Midnight Coding by LoRoom [lofi, chill]  score=25.40
     Why: genre match (lofi), mood match (chill), good energy profile, ideal acousticness
 -----------------------------------------------------------------
 
@@ -107,15 +107,15 @@ Confidence: 0.91 (LLM=0.85, diversity=0.20, spread=0.40)
 **Query:** `"Upbeat pop songs for my morning workout"`
 
 ```
-[STEP 1/4] Planning — extracting taste profile from query...
+[STEP 1/4] Planning: extracting taste profile from query...
 [STEP 2/4] Retrieving song context via RAG...
 [STEP 3/4] Scoring songs with recommender engine...
 [STEP 4/4] Critiquing recommendations with LLM...
 
- 1. Gym Hero — Max Pulse [pop, intense]  score=24.80
+ 1. Gym Hero by Max Pulse [pop, intense]  score=24.80
     Why: genre match (pop), perfect energy, matching tempo, perfect vibe
 -----------------------------------------------------------------
- 2. Sunrise City — Neon Echo [pop, happy]  score=23.10
+ 2. Sunrise City by Neon Echo [pop, happy]  score=23.10
     Why: genre match (pop), mood match (happy), good energy profile
 -----------------------------------------------------------------
 
@@ -128,10 +128,10 @@ Confidence: 0.85 (LLM=0.80, diversity=0.60, spread=0.35)
 **Query:** `"something random"`
 
 ```
-Explanation: Recommendations are broad due to the vague query — no specific genre or mood detected.
+Explanation: Recommendations are broad due to the vague query; no specific genre or mood detected.
 Confidence: 0.28 (LLM=0.40, diversity=0.80, spread=0.10)
 
-[Note: Confidence is low. These recommendations may not match your taste well — try being more specific about genre or mood.]
+[Note: Confidence is low. These recommendations may not match your taste well; try being more specific about genre or mood.]
 ```
 
 ---
@@ -140,19 +140,19 @@ Confidence: 0.28 (LLM=0.40, diversity=0.80, spread=0.10)
 
 ### Hybrid Architecture: LLM + Deterministic Scoring
 
-I kept the deterministic scoring engine as the ranking authority and used the LLM only for planning (profile extraction) and critique (quality assessment). This was a deliberate trade-off: an end-to-end LLM approach would be simpler to build but produces non-reproducible, unexplainable results. The hybrid approach gives us reproducibility (same profile → same ranked list), explainability (each song has a point-by-point breakdown), and quality control (the LLM can flag when results feel off).
+I kept the deterministic scoring engine as the ranking authority and used the LLM only for planning (profile extraction) and critique (quality assessment). This was a deliberate trade-off: an end-to-end LLM approach would be simpler to build but produces non-reproducible, unexplainable results. The hybrid approach gives us reproducibility (same profile yields the same ranked list), explainability (each song has a point-by-point breakdown), and quality control (the LLM can flag when results feel off).
 
 ### RAG with Multi-Source Context
 
-The retriever pulls from two sources: the raw song catalog (CSV) and the genre/mood taxonomy (semantic adjacency maps). This helps the LLM understand that "synthwave" is related to "pop" — improving critique quality over a no-context baseline. The trade-off is added complexity in the retrieval pipeline, but the test harness shows measurable improvement: 0.72 avg confidence with RAG vs. 0.54 without.
+The retriever pulls from two sources: the raw song catalog (CSV) and the genre/mood taxonomy (semantic adjacency maps). This helps the LLM understand that "synthwave" is related to "pop", improving critique quality over a no-context baseline. The trade-off is added complexity in the retrieval pipeline, but the test harness shows measurable improvement: 0.72 avg confidence with RAG vs. 0.54 without.
 
 ### Few-Shot Prompting for Consistency
 
-Three curated examples constrain the LLM's output format, ensuring explanations follow a consistent tone and always include a confidence score. Without few-shot prompting, outputs vary in structure and sometimes omit the confidence line entirely (~40% of baseline runs). The trade-off is that the system is tuned to these specific examples — it works well for music queries but would need new examples for other domains.
+Three curated examples constrain the LLM's output format, ensuring explanations follow a consistent tone and always include a confidence score. Without few-shot prompting, outputs vary in structure and sometimes omit the confidence line entirely (~40% of baseline runs). The trade-off is that the system is tuned to these specific examples; it works well for music queries but would need new examples for other domains.
 
 ### Zero-Dependency LLM Client
 
-Instead of using the `openai` SDK, I built a client using only `urllib.request` from stdlib. LM Studio exposes an OpenAI-compatible endpoint at `/v1/chat/completions`, so no extra pip install is needed. This keeps the project lightweight and avoids dependency conflicts — a practical choice for a course project where simplicity matters.
+Instead of using the `openai` SDK, I built a client using only `urllib.request` from stdlib. LM Studio exposes an OpenAI-compatible endpoint at `/v1/chat/completions`, so no extra pip install is needed. This keeps the project lightweight and avoids dependency conflicts, which is a practical choice for a course project where simplicity matters.
 
 ---
 
@@ -187,36 +187,40 @@ The test harness runs both few-shot and baseline modes across 8 diverse queries:
 
 ### What Didn't
 
-- The 50-song catalog exhausts quickly — diverse queries return repeated songs
+- The 50-song catalog exhausts quickly; diverse queries return repeated songs
 - Vague queries produce low-confidence results with no clear guardrail beyond a disclaimer
 - Pop dominates the dataset (26%), biasing results for users without a strong genre preference
-- The `Song` dataclass originally required `release_year` in its constructor, which broke tests that didn't provide it — fixed by adding a default value
+- The `Song` dataclass originally required `release_year` in its constructor, which broke tests that didn't provide it; this was fixed by adding a default value
 
 ---
 
-## Reflection: What This Taught Me About AI and Problem-Solving
+## Reflection: AI Responsibility & Lessons Learned
 
-### Fuzzy Matching Matters
+### Limitations and Biases
 
-Related genre mapping (pop ↔ synthwave) dramatically improved discovery — users found songs they'd never search for by name but genuinely fit their taste. Simple semantic adjacency maps are a low-cost way to expand recommendation reach without adding ML complexity.
+- **Catalog size:** Only 50 songs means recommendations quickly exhaust diverse options. A real system needs thousands of tracks.
+- **Genre imbalance:** Pop dominates the dataset (26%), biasing results for users without a strong genre preference.
+- **No content awareness:** The system cannot detect offensive lyrics, controversial artists, or thematic mismatch beyond mood labels.
+- **LLM dependency:** If LM Studio is offline, the agent falls back to a generic profile; this loses personalization entirely and returns neutral recommendations that may not match any user intent.
 
-### Structure Beats Raw LLM Output
+### Could This AI Be Misused? How Would I Prevent It?
 
-With few-shot prompting, the LLM's critique output was remarkably consistent across runs. Without it, sometimes the confidence score line was missing entirely. Constraining format early pays off in reliability downstream — a lesson that applies far beyond music recommendations.
+Yes, this system could theoretically be used to manipulate listening habits (e.g., always recommending songs from a specific label or artist). Guardrails are built into the design:
+- **Diversity scoring** penalizes single-genre lists, preventing echo chambers
+- **Confidence disclaimers** surface low-quality results before they reach the user
+- **Transparent reasoning traces** logged to `logs/agent.log` provide an audit trail for debugging and accountability
 
-### Weighting Choices Have Outsized Effects
+### What Surprised Me About AI Reliability
 
-The 6.0 energy weight often overrides perfect genre/mood matches. A song with wrong energy gets buried even if everything else aligns. This taught me that hyperparameter choices aren't just numbers on a page — they directly shape what users experience, and small changes can have large effects.
-
-### The Value of Observable Reasoning Traces
-
-Structuring the agent loop as Plan → Retrieve → Act → Critique made each step independently testable and debuggable. When planning fails, we fall back to a default profile without breaking the whole pipeline. Logging every step to `logs/agent.log` with timestamps turned debugging from guesswork into inspection — one of the most practical engineering habits I picked up on this project.
+- **Few-shot prompting is a force multiplier.** Without it, the LLM's critique output was inconsistent; sometimes omitting the confidence line entirely (~40% of baseline runs). With three curated examples, outputs became remarkably structured. A small prompt change had a large reliability impact.
+- **The energy weight dominates everything.** The 6.0 energy weight often overrides perfect genre and mood matches. A song with wrong energy gets buried even if every other feature aligns, which shows how a single hyperparameter can shape the entire user experience.
+- **Fuzzy matching improves discovery more than expected.** Related genre mapping (pop ↔ synthwave) surfaced songs users would never search for by name but genuinely fit their taste. Simple semantic maps are surprisingly effective at expanding recommendation reach without adding ML complexity.
 
 ### Collaboration with AI During This Project
 
-**Helpful suggestion:** An AI assistant suggested structuring the agent loop as Plan → Retrieve → Act → Critique rather than a single monolithic prompt. This made each step independently testable and debuggable — when planning fails, we can fall back to a default profile without breaking the whole pipeline.
+**Helpful suggestion:** An AI assistant suggested structuring the agent loop as Plan → Retrieve → Act → Critique rather than a single monolithic prompt. This made each step independently testable and debuggable; when planning fails, we can fall back to a default profile without breaking the whole pipeline. The observable reasoning trace turned debugging from guesswork into inspection.
 
-**Flawed suggestion:** The same assistant initially recommended using `openai` SDK for LM Studio integration. Since LM Studio exposes an OpenAI-compatible endpoint, this would add an unnecessary dependency. Instead, I built a zero-dependency client using only `urllib.request` from stdlib — lighter, no extra pip install, and works identically with the `/v1/chat/completions` endpoint.
+**Flawed suggestion:** An AI assistant initially recommended using the `openai` SDK for LM Studio integration. Since LM Studio exposes an OpenAI-compatible endpoint at `/v1/chat/completions`, this would add an unnecessary dependency. I instead built a zero-dependency client using only `urllib.request` from stdlib, which is lighter, requires no extra pip install, and works identically with the endpoint.
 
 ---
 
@@ -226,5 +230,5 @@ Structuring the agent loop as Plan → Retrieve → Act → Critique made each s
 |---------|---------------|--------|
 | **RAG Enhancement** | Multi-source retrieval: songs.csv + genre/mood taxonomy from `get_genre_similarity`/`get_mood_similarity` mappings. Retrieved context measurably improves critique quality vs. no-context baseline (test harness shows 0.72 avg confidence with RAG vs. 0.54 without). | +2 |
 | **Agentic Workflow Enhancement** | Four-step observable reasoning: PLAN → RETRIEVE → ACT → CRITIQUE. Each step logged to console and `logs/agent.log` with timestamps. Intermediate LLM outputs (profile JSON, critique text) captured in `reasoning_trace`. | +2 |
-| **Fine-Tuning / Specialization** | Few-shot prompting with 3 curated examples constrains output tone and format. Baseline comparison via `--no-few-shot` flag shows structured output drops from consistent to intermittent — confidence line missing in ~40% of baseline runs vs. 0% with few-shot. | +2 |
+| **Fine-Tuning / Specialization** | Few-shot prompting with 3 curated examples constrains output tone and format. Baseline comparison via `--no-few-shot` flag shows structured output drops from consistent to intermittent; confidence line missing in ~40% of baseline runs vs. 0% with few-shot. | +2 |
 | **Test Harness** | `src/test_harness.py` runs 8 predefined queries through the agent, checking non-empty recommendations, confidence ≥ threshold, and explanation presence. Prints pass/fail summary table for both few-shot and baseline modes. | +2 |
