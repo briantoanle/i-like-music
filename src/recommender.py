@@ -18,6 +18,7 @@ class Song:
     valence: float
     danceability: float
     acousticness: float
+    release_year: int = 2024
 
 @dataclass
 class UserProfile:
@@ -89,7 +90,8 @@ def get_genre_similarity(u_genre: str, s_genre: str) -> float:
     s = s_genre.lower().strip()
     if not u or not s: return 0.0
     if u == s: return 1.0
-    if u in s or s in u: return 0.7
+    # Only allow substring matches for words longer than 2 chars (Bug 3)
+    if (len(u) > 2 and u in s) or (len(s) > 2 and s in u): return 0.7
     
     # Simple semantic mapping
     related = {
@@ -139,7 +141,8 @@ def load_songs(csv_path: str) -> Dict[int, Dict]:
                     "tempo_bpm": float(row["tempo_bpm"]),
                     "valence": float(row["valence"]),
                     "danceability": float(row["danceability"]),
-                    "acousticness": float(row["acousticness"])
+                    "acousticness": float(row["acousticness"]),
+                    "release_year": int(row["release_year"])
                 }
                 songs[song["id"]] = song
     except FileNotFoundError:

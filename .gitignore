@@ -16,3 +16,9 @@ venv/
 
 # Idea files
 .idea/
+
+# Generated logs
+logs/
+
+# Mermaid source (PNG is committed)
+*.mmd

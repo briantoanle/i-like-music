@@ -1,51 +1,51 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
-11,Moonlight Serenade,Lunar String Quartet,classical,peaceful,0.25,65,0.85,0.22,0.95
-12,Golden Hour Sonata,Ivory Keys,classical,focused,0.35,75,0.70,0.31,0.88
-13,Iron Hammer,Steel Vortex,metal,intense,0.95,165,0.25,0.44,0.02
-14,Rage Factory,Chaos Theory,metal,angry,0.92,140,0.15,0.38,0.01
-15,Island Sunshine,Tropical Soul,reggae,happy,0.60,85,0.82,0.77,0.35
-16,Lazy Hammock,Ocean Breeze,reggae,relaxed,0.45,72,0.75,0.68,0.42
-17,Rainy Window,Deep Blue,blues,melancholy,0.38,68,0.28,0.45,0.72
-18,Delta Dust,Mojo Rider,blues,relaxed,0.42,78,0.55,0.58,0.65
-19,Neon Pulse,Cyber Beats,edm,party,0.96,128,0.72,0.92,0.05
-20,Digital Dream,Electronica,edm,energetic,0.88,124,0.65,0.85,0.12
-21,Old Oak Tree,Willow Creek,country,nostalgic,0.55,95,0.62,0.58,0.68
-22,Mountain Mist,Echo Fold,folk,peaceful,0.30,82,0.78,0.52,0.91
-23,City Sidewalks,Street Poet,hip hop,energetic,0.78,92,0.55,0.88,0.15
-24,Vantage Point,Lyric Legend,hip hop,confident,0.72,88,0.61,0.82,0.21
-25,Carnival Night,Ritmo Rico,latin,energetic,0.85,115,0.81,0.90,0.25
-26,Tropical Dance,Samba Star,latin,happy,0.82,120,0.88,0.86,0.32
-27,Velvet Shadows,Silk Smooth,r&b,romantic,0.48,75,0.68,0.65,0.45
-28,Midnight Glow,Rose Gold,r&b,smooth,0.52,82,0.65,0.72,0.38
-29,Stardust Swing,Jazz Collective,jazz,happy,0.65,125,0.82,0.62,0.55
-30,Retro Future,Grid Runner,synthwave,futuristic,0.70,105,0.58,0.68,0.18
-31,Abyssal Void,Shadow Sound,dark ambient,mysterious,0.15,55,0.12,0.21,0.98
-32,Rebel Riot,Static Noise,punk,aggressive,0.94,182,0.32,0.65,0.01
-33,Deep Roots,Soul Singer,soul,emotional,0.58,72,0.42,0.58,0.62
-34,Groove City,Funky Town,disco,funky,0.88,120,0.85,0.92,0.08
-35,Spanish Sun,Flamenco Fire,flamenco,passionate,0.81,145,0.72,0.68,0.82
-36,Morning Grace,Harbor Choir,gospel,uplifting,0.75,110,0.85,0.58,0.45
-37,Grey Skies,Flannel Fade,grunge,sad,0.62,85,0.18,0.42,0.15
-38,Psychedelic Soul,Dream Weaver,psychedelic rock,trippy,0.68,105,0.55,0.62,0.28
-39,Robotic Rhythm,Machine Mind,techno,robotic,0.85,132,0.42,0.78,0.05
-40,Highlands Echo,Global Voice,world,traditional,0.52,98,0.75,0.65,0.78
-41,Summer Crush,Sunny Day,pop,catchy,0.78,122,0.85,0.82,0.15
-42,Midnight Confession,Luna Vane,pop,emotional,0.45,88,0.35,0.52,0.42
-43,Neon Heartbeat,Digital Love,pop,upbeat,0.85,128,0.72,0.91,0.08
-44,Waves of You,Ocean Echo,pop,summer,0.65,110,0.78,0.75,0.22
-45,Rising Higher,Peak Performance,pop,anthemic,0.92,145,0.65,0.68,0.05
-46,Simple Love,Acoustic Soul,pop,acoustic,0.32,75,0.82,0.58,0.88
-47,Electric Sky,Voltage,pop,danceable,0.88,124,0.68,0.85,0.02
-48,Lost in the City,Urban Pulse,pop,minimalist,0.55,100,0.52,0.62,0.31
-49,Silver Lining,Aria Grace,pop,hopeful,0.72,115,0.88,0.70,0.25
-50,Glitter Dust,Sparkle Squad,pop,party,0.95,132,0.92,0.95,0.10
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,release_year
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,2020
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,2022
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,2020
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,2022
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,2020
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,2020
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,2023
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,2022
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,2024
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,2021
+11,Moonlight Serenade,Lunar String Quartet,classical,peaceful,0.25,65,0.85,0.22,0.95,2023
+12,Golden Hour Sonata,Ivory Keys,classical,focused,0.35,75,0.70,0.31,0.88,2024
+13,Iron Hammer,Steel Vortex,metal,intense,0.95,165,0.25,0.44,0.02,2023
+14,Rage Factory,Chaos Theory,metal,angry,0.92,140,0.15,0.38,0.01,2023
+15,Island Sunshine,Tropical Soul,reggae,happy,0.60,85,0.82,0.77,0.35,2023
+16,Lazy Hammock,Ocean Breeze,reggae,relaxed,0.45,72,0.75,0.68,0.42,2022
+17,Rainy Window,Deep Blue,blues,melancholy,0.38,68,0.28,0.45,0.72,2024
+18,Delta Dust,Mojo Rider,blues,relaxed,0.42,78,0.55,0.58,0.65,2021
+19,Neon Pulse,Cyber Beats,edm,party,0.96,128,0.72,0.92,0.05,2023
+20,Digital Dream,Electronica,edm,energetic,0.88,124,0.65,0.85,0.12,2020
+21,Old Oak Tree,Willow Creek,country,nostalgic,0.55,95,0.62,0.58,0.68,2023
+22,Mountain Mist,Echo Fold,folk,peaceful,0.30,82,0.78,0.52,0.91,2023
+23,City Sidewalks,Street Poet,hip hop,energetic,0.78,92,0.55,0.88,0.15,2023
+24,Vantage Point,Lyric Legend,hip hop,confident,0.72,88,0.61,0.82,0.21,2022
+25,Carnival Night,Ritmo Rico,latin,energetic,0.85,115,0.81,0.90,0.25,2021
+26,Tropical Dance,Samba Star,latin,happy,0.82,120,0.88,0.86,0.32,2022
+27,Velvet Shadows,Silk Smooth,r&b,romantic,0.48,75,0.68,0.65,0.45,2023
+28,Midnight Glow,Rose Gold,r&b,smooth,0.52,82,0.65,0.72,0.38,2023
+29,Stardust Swing,Jazz Collective,jazz,happy,0.65,125,0.82,0.62,0.55,2023
+30,Retro Future,Grid Runner,synthwave,futuristic,0.70,105,0.58,0.68,0.18,2024
+31,Abyssal Void,Shadow Sound,dark ambient,mysterious,0.15,55,0.12,0.21,0.98,2020
+32,Rebel Riot,Static Noise,punk,aggressive,0.94,182,0.32,0.65,0.01,2022
+33,Deep Roots,Soul Singer,soul,emotional,0.58,72,0.42,0.58,0.62,2021
+34,Groove City,Funky Town,disco,funky,0.88,120,0.85,0.92,0.08,2023
+35,Spanish Sun,Flamenco Fire,flamenco,passionate,0.81,145,0.72,0.68,0.82,2020
+36,Morning Grace,Harbor Choir,gospel,uplifting,0.75,110,0.85,0.58,0.45,2024
+37,Grey Skies,Flannel Fade,grunge,sad,0.62,85,0.18,0.42,0.15,2021
+38,Psychedelic Soul,Dream Weaver,psychedelic rock,trippy,0.68,105,0.55,0.62,0.28,2020
+39,Robotic Rhythm,Machine Mind,techno,robotic,0.85,132,0.42,0.78,0.05,2023
+40,Highlands Echo,Global Voice,world,traditional,0.52,98,0.75,0.65,0.78,2022
+41,Summer Crush,Sunny Day,pop,catchy,0.78,122,0.85,0.82,0.15,2020
+42,Midnight Confession,Luna Vane,pop,emotional,0.45,88,0.35,0.52,0.42,2020
+43,Neon Heartbeat,Digital Love,pop,upbeat,0.85,128,0.72,0.91,0.08,2021
+44,Waves of You,Ocean Echo,pop,summer,0.65,110,0.78,0.75,0.22,2020
+45,Rising Higher,Peak Performance,pop,anthemic,0.92,145,0.65,0.68,0.05,2023
+46,Simple Love,Acoustic Soul,pop,acoustic,0.32,75,0.82,0.58,0.88,2020
+47,Electric Sky,Voltage,pop,danceable,0.88,124,0.68,0.85,0.02,2023
+48,Lost in the City,Urban Pulse,pop,minimalist,0.55,100,0.52,0.62,0.31,2020
+49,Silver Lining,Aria Grace,pop,hopeful,0.72,115,0.88,0.70,0.25,2024
+50,Glitter Dust,Sparkle Squad,pop,party,0.95,132,0.92,0.95,0.10,2022
