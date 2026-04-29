@@ -5,7 +5,7 @@ format, and reasoning style. Used to demonstrate measurable specialization
 vs. a zero-shot baseline.
 """
 
-from typing import List
+from typing import List, Optional, Dict
 
 FEW_SHOT_EXAMPLES: List[dict] = [
     {
@@ -44,7 +44,7 @@ FEW_SHOT_EXAMPLES: List[dict] = [
 ]
 
 
-def build_few_shot_prompt(user_query: str, examples: List[dict] | None = None) -> str:
+def build_few_shot_prompt(user_query: str, examples: Optional[List[Dict]] = None) -> str:
     """Assemble a few-shot prompt with examples followed by the user query.
 
     Returns the full system + example messages as a single string suitable

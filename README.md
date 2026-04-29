@@ -49,7 +49,7 @@ graph TD
 ---
 
 ## Walkthrough Video
-[Link to Video Walkthrough Placeholder]
+[Rhymer - AI Powered Music Recommender System](https://youtu.be/wQNzMH9X9eE)
 
 ---
 
@@ -198,7 +198,7 @@ The test harness runs both few-shot and baseline modes across 8 diverse queries:
 
 ### What Didn't
 
-- The 50-song catalog exhausts quickly; diverse queries return repeated songs
+- The 150-song catalog provides more variety than the prototype, but still exhausts quickly for very niche requests.
 - Vague queries produce low-confidence results with no clear guardrail beyond a disclaimer
 - Pop dominates the dataset (26%), biasing results for users without a strong genre preference
 - The `Song` dataclass originally required `release_year` in its constructor, which broke tests that didn't provide it; this was fixed by adding a default value
@@ -215,7 +215,7 @@ I used an AI assistant throughout the development process for architecting the a
 - **Flawed Suggestion:** An AI assistant initially recommended using the `openai` Python SDK. I realized this would add an unnecessary dependency since LM Studio exposes a standard HTTP endpoint. I instead built a **zero-dependency client** using `urllib.request`, keeping the project lightweight and easier to set up.
 
 ### Limitations & Future Improvements
-- **Catalog Size:** The 50-song dataset is small. Future versions should integrate with the Spotify API or a larger SQL database.
+- **Catalog Size:** The 150-song dataset is an improvement but still small. Future versions should integrate with the Spotify API or a larger SQL database.
 - **Cold Start:** If the LLM is offline, the system falls back to a neutral profile. I want to implement a local fallback using simple keyword matching for basic functionality when the API is unreachable.
 
 ---

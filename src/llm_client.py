@@ -46,6 +46,20 @@ class LMStudioClient:
             return None
 
         content = raw.get("choices", [{}])[0].get("message", {}).get("content", "")
+        finish_reason = raw.get("choices", [{}])[0].get("finish_reason", "")
+
+        if finish_reason == "length":
+            print(f"[llm_client] Warning: Response truncated (max_tokens reached).")
+        
+        if not content:
+            # Check for reasoning_content (common in CoT models) to provide better debugging
+            reasoning = raw.get("choices", [{}])[0].get("message", {}).get("reasoning_content", "")
+            if reasoning:
+                print(f"[llm_client] Info: Model used reasoning but produced no content. "
+                      f"Reasoning length: {len(reasoning)} chars.")
+            else:
+                print(f"[llm_client] Warning: Empty content in response. Raw: {raw}")
+        
         return content.strip() if content else None
 
     def available_models(self) -> list[str]:
@@ -55,7 +69,8 @@ class LMStudioClient:
         except LMStudioError as e:
             print(f"[llm_client] {e}")
             return []
-        return [m["id"] for m in data] if isinstance(data, list) else []
+        models_list = data.get("data", []) if isinstance(data, dict) else data
+        return [m["id"] for m in models_list] if isinstance(models_list, list) else []
 
     # -- internals ----------------------------------------------------------
 

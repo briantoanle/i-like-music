@@ -31,7 +31,7 @@ The system uses **few-shot prompting** to ensure consistent output structure and
 
 ## 4. Data  
 
-- **Catalog**: A static dataset of 50 songs (`songs.csv`).
+- **Catalog**: A static dataset of 150 songs (`songs.csv`).
 - **Context**: A taxonomy of genre and mood similarity maps used by the RAG retriever to understand semantic relationships.
 - **Representation**: Includes genres like Pop, Metal, Lofi, Jazz, and EDM, and moods such as Chill, Intense, and Happy.
 - **Missing Data**: Lacks real-time popularity data, lyrics, and deep sub-genre variety due to the small catalog size.
@@ -49,7 +49,7 @@ The system uses **few-shot prompting** to ensure consistent output structure and
 
 ## 6. Limitations and Bias 
 
-- **Small Catalog**: With only 50 songs, recommendations can feel repetitive and quickly exhaust diverse options.
+- **Small Catalog**: With 150 songs, the recommender has more variety than the original version, but still lacks the depth of major streaming platforms.
 - **Genre Imbalance**: Pop dominates the dataset (26%), which can bias results toward mainstream tracks.
 - **Hyperparameter Sensitivity**: The high weight on Energy (6.0) can override perfect genre or mood matches.
 - **LLM Dependency**: The system requires a running LLM (e.g., via LM Studio); if offline, it falls back to a generic profile, losing personalization.
@@ -69,7 +69,7 @@ The system uses **few-shot prompting** to ensure consistent output structure and
 
 ## 8. Future Work  
 
-- **Catalog Expansion**: Moving from 50 songs to thousands of tracks.
+- **Catalog Expansion**: Scaling from 150 songs to thousands of tracks using a vector database.
 - **Better Guardrails**: Improving handling of vague or out-of-domain queries.
 - **Dataset Balancing**: Adding more entries for underrepresented genres like Flamenco or Grunge.
 - **Multi-Modal Support**: Allowing users to provide sample songs or playlists as input.
