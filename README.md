@@ -18,27 +18,38 @@ Traditional recommenders force users into rigid forms (sliders, dropdowns, numer
 
 ## Architecture Overview
 
-```
-User Query (natural language)
-        │
-        ▼
-┌──────────────┐
-│   Agent      │  LLM-driven orchestrator
-│  (agent.py)  │     1. PLAN: extract taste profile from NL query
-│              │     2. RETRIEVE: fetch song context via RAG
-│              │     3. ACT: call recommender scoring engine
-│              │     4. CRITIQUE: self-evaluate + confidence score
-└──────┬───────┘
-       │ calls
-       ├────────► Recommender (recommender.py): weighted scoring engine
-       ├────────► RAG Retriever (rag_retriever.py): CSV + taxonomy context
-       └────────► Evaluator (evaluator.py): diversity, spread, guardrails
+```mermaid
+graph TD
+    User([User Query]) --> Plan[PLAN: Extract Taste Profile]
+    Plan --> Retrieve[RETRIEVE: Fetch Song Context via RAG]
+    Retrieve --> Act[ACT: Rule-Based Scoring Engine]
+    Act --> Critique[CRITIQUE: Self-Evaluation & Confidence]
+    Critique --> Output([Final Recommendations & Explanation])
 
-Output: Ranked recommendations with explanations, confidence scores,
-        and observable reasoning trace logged to file.
+    subgraph "Agentic Loop (agent.py)"
+    Plan
+    Retrieve
+    Act
+    Critique
+    end
+
+    subgraph "Data & Knowledge"
+    Catalog[(CSV Catalog)] -.-> Retrieve
+    Taxonomy[(Genre/Mood Taxonomy)] -.-> Retrieve
+    end
+
+    subgraph "Evaluation (evaluator.py)"
+    Critique -.-> Confidence[Confidence Scoring]
+    Confidence -.-> Guardrail[Low Confidence Guardrail]
+    end
 ```
 
 **Data flow:** User input → LLM extracts structured profile → RAG retrieves catalog context → Recommender ranks songs by weighted score → LLM critiques results → Evaluator computes confidence → Final output with disclaimer if confidence is low.
+
+---
+
+## Walkthrough Video
+[Link to Video Walkthrough Placeholder]
 
 ---
 
@@ -194,33 +205,18 @@ The test harness runs both few-shot and baseline modes across 8 diverse queries:
 
 ---
 
-## Reflection: AI Responsibility & Lessons Learned
+## Reflection on AI Collaboration
 
-### Limitations and Biases
+### How I Used AI
+I used an AI assistant throughout the development process for architecting the agent loop, debugging complex JSON parsing logic, and generating the initial song dataset. The collaboration focused on balancing the "black box" nature of LLMs with the predictability of my original rule-based engine.
 
-- **Catalog size:** Only 50 songs means recommendations quickly exhaust diverse options. A real system needs thousands of tracks.
-- **Genre imbalance:** Pop dominates the dataset (26%), biasing results for users without a strong genre preference.
-- **No content awareness:** The system cannot detect offensive lyrics, controversial artists, or thematic mismatch beyond mood labels.
-- **LLM dependency:** If LM Studio is offline, the agent falls back to a generic profile; this loses personalization entirely and returns neutral recommendations that may not match any user intent.
+### AI Suggestion Audit
+- **Helpful Suggestion:** An AI assistant suggested structuring the agent loop as **Plan → Retrieve → Act → Critique** rather than a single monolithic prompt. This decoupled the system, making each step independently testable. When planning fails, the system can now fall back to a default profile without breaking the whole pipeline.
+- **Flawed Suggestion:** An AI assistant initially recommended using the `openai` Python SDK. I realized this would add an unnecessary dependency since LM Studio exposes a standard HTTP endpoint. I instead built a **zero-dependency client** using `urllib.request`, keeping the project lightweight and easier to set up.
 
-### Could This AI Be Misused? How Would I Prevent It?
-
-Yes, this system could theoretically be used to manipulate listening habits (e.g., always recommending songs from a specific label or artist). Guardrails are built into the design:
-- **Diversity scoring** penalizes single-genre lists, preventing echo chambers
-- **Confidence disclaimers** surface low-quality results before they reach the user
-- **Transparent reasoning traces** logged to `logs/agent.log` provide an audit trail for debugging and accountability
-
-### What Surprised Me About AI Reliability
-
-- **Few-shot prompting is a force multiplier.** Without it, the LLM's critique output was inconsistent; sometimes omitting the confidence line entirely (~40% of baseline runs). With three curated examples, outputs became remarkably structured. A small prompt change had a large reliability impact.
-- **The energy weight dominates everything.** The 6.0 energy weight often overrides perfect genre and mood matches. A song with wrong energy gets buried even if every other feature aligns, which shows how a single hyperparameter can shape the entire user experience.
-- **Fuzzy matching improves discovery more than expected.** Related genre mapping (pop ↔ synthwave) surfaced songs users would never search for by name but genuinely fit their taste. Simple semantic maps are surprisingly effective at expanding recommendation reach without adding ML complexity.
-
-### Collaboration with AI During This Project
-
-**Helpful suggestion:** An AI assistant suggested structuring the agent loop as Plan → Retrieve → Act → Critique rather than a single monolithic prompt. This made each step independently testable and debuggable; when planning fails, we can fall back to a default profile without breaking the whole pipeline. The observable reasoning trace turned debugging from guesswork into inspection.
-
-**Flawed suggestion:** An AI assistant initially recommended using the `openai` SDK for LM Studio integration. Since LM Studio exposes an OpenAI-compatible endpoint at `/v1/chat/completions`, this would add an unnecessary dependency. I instead built a zero-dependency client using only `urllib.request` from stdlib, which is lighter, requires no extra pip install, and works identically with the endpoint.
+### Limitations & Future Improvements
+- **Catalog Size:** The 50-song dataset is small. Future versions should integrate with the Spotify API or a larger SQL database.
+- **Cold Start:** If the LLM is offline, the system falls back to a neutral profile. I want to implement a local fallback using simple keyword matching for basic functionality when the API is unreachable.
 
 ---
 
