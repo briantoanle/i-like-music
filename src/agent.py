@@ -72,10 +72,12 @@ class MusicAgent:
 
     def __init__(self, songs_path: str = "data/songs.csv",
                  llm_client: Optional[LMStudioClient] = None,
-                 use_few_shot: bool = True):
+                 use_few_shot: bool = True,
+                 use_rag: bool = True):
         self.songs = load_songs(songs_path)
         self.llm = llm_client or LMStudioClient()
         self.use_few_shot = use_few_shot
+        self.use_rag = use_rag
 
     def run(self, query: str, k: int = 5) -> AgentResult:
         """Execute the full agent loop and return structured results."""
@@ -89,9 +91,14 @@ class MusicAgent:
             profile = self._default_profile()
 
         # --- Step 2: RETRIEVE ---
-        logger.info("[STEP 2/4] Retrieving song context via RAG...")
-        rag_context = retrieve_context(self.songs, query_hint=query)
-        trace.append(f"[RETRIEVE] Context: {len(rag_context)} chars of catalog data")
+        if self.use_rag:
+            logger.info("[STEP 2/4] Retrieving song context via RAG...")
+            rag_context = retrieve_context(self.songs, query_hint=query)
+            trace.append(f"[RETRIEVE] Context: {len(rag_context)} chars of catalog data")
+        else:
+            logger.info("[STEP 2/4] RAG disabled; skipping retrieval.")
+            rag_context = ""
+            trace.append("[RETRIEVE] RAG disabled; no context retrieved.")
 
         # --- Step 3: ACT ---
         logger.info("[STEP 3/4] Scoring songs with recommender engine...")

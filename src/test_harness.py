@@ -33,11 +33,13 @@ TEST_QUERIES = [
 ]
 
 
-def run_harness(use_few_shot: bool = True) -> None:
+def run_harness(use_few_shot: bool = True, use_rag: bool = True) -> None:
     """Execute all test queries and print a summary table."""
-    label = "Few-Shot" if use_few_shot else "Baseline (zero-shot)"
+    mode_label = "Few-Shot" if use_few_shot else "Baseline"
+    rag_label = "with RAG" if use_rag else "no RAG"
+    label = f"{mode_label} {rag_label}"
     print(f"\n{'=' * 70}")
-    print(f"  Test Harness — {label} Mode")
+    print(f"  Test Harness — {label}")
     print(f"{'=' * 70}\n")
 
     try:
@@ -45,6 +47,7 @@ def run_harness(use_few_shot: bool = True) -> None:
             songs_path="data/songs.csv",
             llm_client=LMStudioClient(),
             use_few_shot=use_few_shot,
+            use_rag=use_rag,
         )
     except Exception as e:
         print(f"Failed to initialize agent: {e}")
@@ -88,9 +91,15 @@ def run_harness(use_few_shot: bool = True) -> None:
 
 
 def main() -> None:
-    """Run both few-shot and baseline harnesses for comparison."""
-    run_harness(use_few_shot=True)
-    run_harness(use_few_shot=False)
+    """Run harnesses for comparison (Few-Shot, Baseline, and No-RAG)."""
+    # 1. Primary: Few-Shot with RAG
+    run_harness(use_few_shot=True, use_rag=True)
+    
+    # 2. Specialization baseline: No Few-Shot
+    run_harness(use_few_shot=False, use_rag=True)
+    
+    # 3. RAG baseline: No RAG
+    run_harness(use_few_shot=True, use_rag=False)
 
 
 if __name__ == "__main__":

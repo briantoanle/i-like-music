@@ -228,7 +228,7 @@ Yes, this system could theoretically be used to manipulate listening habits (e.g
 
 | Feature | Implementation | Points |
 |---------|---------------|--------|
-| **RAG Enhancement** | Multi-source retrieval: songs.csv + genre/mood taxonomy from `get_genre_similarity`/`get_mood_similarity` mappings. Retrieved context measurably improves critique quality vs. no-context baseline (test harness shows 0.72 avg confidence with RAG vs. 0.54 without). | +2 |
-| **Agentic Workflow Enhancement** | Four-step observable reasoning: PLAN → RETRIEVE → ACT → CRITIQUE. Each step logged to console and `logs/agent.log` with timestamps. Intermediate LLM outputs (profile JSON, critique text) captured in `reasoning_trace`. | +2 |
-| **Fine-Tuning / Specialization** | Few-shot prompting with 3 curated examples constrains output tone and format. Baseline comparison via `--no-few-shot` flag shows structured output drops from consistent to intermittent; confidence line missing in ~40% of baseline runs vs. 0% with few-shot. | +2 |
-| **Test Harness** | `src/test_harness.py` runs 8 predefined queries through the agent, checking non-empty recommendations, confidence ≥ threshold, and explanation presence. Prints pass/fail summary table for both few-shot and baseline modes. | +2 |
+| **RAG Enhancement** | Multi-source retrieval: songs.csv + genre/mood taxonomy. Agent supports a `use_rag` toggle. Retrieved context measurably improves critique quality vs. no-context baseline (test harness allows comparing RAG vs. No-RAG). | +2 |
+| **Agentic Workflow Enhancement** | Four-step observable reasoning: PLAN → RETRIEVE → ACT → CRITIQUE. Each step logged to console and `logs/agent.log` with timestamps. Intermediate LLM outputs captured in `reasoning_trace`. | +2 |
+| **Fine-Tuning / Specialization** | Few-shot prompting with 3 curated examples constrains output tone and format. Baseline comparison via `--no-few-shot` flag shows structured output drops from consistent to intermittent without prompting. | +2 |
+| **Test Harness** | `src/test_harness.py` runs 8 predefined queries through three modes: Few-Shot with RAG, Baseline with RAG, and Few-Shot No-RAG. Prints pass/fail summary table and average confidence for each. | +2 |

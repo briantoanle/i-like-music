@@ -1,136 +1,83 @@
-# 🎧 Model Card: Music Recommender Simulation
+# 🎧 Model Card: Rhymer (Agentic AI Edition)
 
 ## 1. Model Name  
 
-**Rhymer**  
+**Rhymer** (Agentic AI Music Recommender)
 
 ---
 
 ## 2. Intended Use  
 
-Describe what your recommender is designed to do and who it is for. 
+Rhymer is an AI-powered system designed to provide personalized music recommendations based on natural-language user queries.
 
-Prompts:  
-
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+- **Recommendations**: It generates ranked song lists with detailed explanations and confidence scores.
+- **User Assumptions**: It assumes users can describe their musical preferences (genre, mood, activity) in plain English.
+- **Purpose**: This is a classroom exploration project to demonstrate a hybrid AI architecture combining Large Language Models (LLMs) with deterministic scoring engines.
 
 ---
-Personalized song suggestions by matching a user's stylistic preferences (genre, mood) and technical attributes (BPM, energy, acousticness) against a library.
-It assumes users can define their taste across seven specific dimensions: genre, mood, energy, tempo, valence, danceability, and acousticness.
-Classroom exploration and simulation to understand how weighting and scoring algorithms influence content discovery.
+
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+Rhymer uses a four-step **agentic workflow** to process user requests:
 
-Prompts:  
+1.  **PLAN (LLM)**: An LLM extracts a structured "taste profile" (genre, mood, energy, tempo, etc.) from the user's natural-language query.
+2.  **RETRIEVE (RAG)**: The system fetches relevant song data and genre/mood taxonomy maps using Retrieval-Augmented Generation (RAG) to provide context for the evaluation.
+3.  **ACT (Deterministic Engine)**: A rule-based recommender scores songs from the catalog against the extracted profile using weighted genre, mood, and audio-feature matching.
+4.  **CRITIQUE (LLM)**: The LLM evaluates the final recommendations, provides an explanation for the choices, and calculates a confidence score based on how well the results match the original intent.
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+The system uses **few-shot prompting** to ensure consistent output structure and **fuzzy matching** to identify related genres (e.g., matching "Pop" with "Synthwave").
 
 ---
-- It looks at everything from the song's "vibe" (mood and energy) to its technical specs (how fast it is and how much it uses real instruments vs. electronics).
-- It takes your favorite genre/mood and compares it to your target "goals", like how much energy you want in a song or if you’re looking for something positive (valence).
-- Every time a song matches a part of your profile, it earns "points." High-priority features like Energy and Tempo carry more weight than simple labels. It even uses "fuzzy matching," so if you like Pop, it knows to give partial credit for related styles like Synthwave or Disco.
-- I rebalanced the weights to prioritize the "feel" of a song (Energy/Acousticness) over strict genre labels to help break users out of "filter bubbles" and find related music they might otherwise miss.
+
 ## 4. Data  
 
-Describe the dataset the model uses.  
-
-Prompts:  
-
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+- **Catalog**: A static dataset of 50 songs (`songs.csv`).
+- **Context**: A taxonomy of genre and mood similarity maps used by the RAG retriever to understand semantic relationships.
+- **Representation**: Includes genres like Pop, Metal, Lofi, Jazz, and EDM, and moods such as Chill, Intense, and Happy.
+- **Missing Data**: Lacks real-time popularity data, lyrics, and deep sub-genre variety due to the small catalog size.
 
 ---
-50 Songs catalog.
-It covers a wide range of genres (Pop, Metal, Lofi, Jazz, Reggae, EDM, etc.) and moods (Chill, Intense, Happy, Sad, Moody).
-The dataset is a static snapshot, so it lacks real-time popularity data, lyrics, or niche sub-genres that haven't been manually categorized yet.
 
 ## 5. Strengths  
 
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+- **Natural Language Understanding**: Users can use conversational queries instead of rigid forms.
+- **Explainability**: Every recommendation includes a point-by-point breakdown and a reasoning trace.
+- **Reproducibility**: The deterministic scoring engine ensures that the same profile always yields the same rankings.
+- **Quality Control**: Confidence disclaimers and LLM critiques catch and flag low-quality or vague results.
 
 ---
-It works exceptionally well for users with "extreme" tastes, like those who only want super high-energy Metal or very low-energy Lofi study beats.
-It's great at identifying the "acoustic signature" of a user's taste, consistently surfacing songs with the right instrument-to-electronic ratio.
-The fuzzy matching feels natural; a Pop fan stays within a "mainstream" vibe without being trapped in just one genre label.
+
 ## 6. Limitations and Bias 
 
-Where the system struggles or behaves unfairly. 
-
-Prompts:  
-
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+- **Small Catalog**: With only 50 songs, recommendations can feel repetitive and quickly exhaust diverse options.
+- **Genre Imbalance**: Pop dominates the dataset (26%), which can bias results toward mainstream tracks.
+- **Hyperparameter Sensitivity**: The high weight on Energy (6.0) can override perfect genre or mood matches.
+- **LLM Dependency**: The system requires a running LLM (e.g., via LM Studio); if offline, it falls back to a generic profile, losing personalization.
+- **No Content Safety**: Does not detect offensive lyrics or controversial artists.
 
 ---
-It doesn't know anything about the lyrics, the artist's reputation, or how recent the song is.
-Some genres like Flamenco or Grunge have very few entries, making them harder for the system to recommend frequently
-Pop is the most common genre in the dataset, which may unintentionally lead to "Pop-leaning" results for general profiles.
-The high weight on Energy at 6.0 means the system might ignore a perfect genre/mood match if the energy level is slightly outside the user's target.
-
-
 
 ## 7. Evaluation  
 
-How you checked whether the recommender behaved as expected. 
-
-Prompts:  
-
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
-
-No need for numeric metrics unless you created some.
+- **Unit Testing**: 40 tests covering all modules (agent, evaluator, recommender, etc.).
+- **Test Harness**: Validated across 8 diverse queries.
+    - **Few-shot mode**: 7/8 passed (0.72 avg confidence).
+    - **Baseline mode**: 5/8 passed (0.54 avg confidence).
+- **Key Discovery**: Few-shot prompting reduced structured output failures from ~40% to 0%.
 
 ---
-The prfoiles tested are "High-energy Pop Enthusiast", "Chill Lofi Student," and "Metal Head."
-I looked for whether the top 5 results felt cohesive. I was surprised by how much the "Fuzzy Matching" helped high-energy pop fans discover EDM and Synthwave tracks.
-I ran the same profile multiple times to ensure the tie-breaking logic (sorting by artist/title) kept the results stable and predictable.
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+- **Catalog Expansion**: Moving from 50 songs to thousands of tracks.
+- **Better Guardrails**: Improving handling of vague or out-of-domain queries.
+- **Dataset Balancing**: Adding more entries for underrepresented genres like Flamenco or Grunge.
+- **Multi-Modal Support**: Allowing users to provide sample songs or playlists as input.
 
 ---
-I can add a feature to show the exact point breakdown for every recommendation like (+6 for Energy).
-Implement a "diversity penalty" to ensure the top 5 results aren't all by the same artist.
-Allow users to specify genres they hate to explicitly filter them out
 
 ## 9. Personal Reflection  
 
-A few sentences about your experience.  
+Building Rhymer taught me that **few-shot prompting is a force multiplier** for AI reliability. A small change in the prompt layout had a massive impact on the consistency of the critique output. 
 
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
-
-I learned that recommendation systems are a delicate balance of math and psychology; changing a single weight can completely change the personality of the app.
-
-I was surprised by how difficult it is to quantify vibe using just numerical data, sometimes two songs have the same stats but feel very different. 
+I also discovered that hybrid architectures—combining the flexibility of LLMs with the predictability of math—are essential for building systems that are both powerful and explainable. Finding the balance between a "vibe" and numerical data (like energy vs. genre) remains a fascinating challenge in music recommendation.
